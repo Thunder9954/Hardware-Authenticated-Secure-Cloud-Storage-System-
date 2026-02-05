@@ -12,6 +12,7 @@
  - [Flowchart Description (Textual)](#7-flowchart-description-textual)
  - [Security Features](#8-security-features)
  - [Advantages of the System](#9-advantages-of-the-system)
+ - [Demo / Testing](#demo--testing)
  - [Conclusion](#10-conclusion)
 
  ## 1. Project Description
@@ -218,7 +219,23 @@ This layered approach ensures that failure or compromise of one layer does not e
 
 ---
 
+## Demo / Testing
+
+ A sample encrypted artifact is included in this repository as `README.mksh`. This file is intentionally stored as **ciphertext (binary)** to demonstrate that encrypted data is not human-readable and cannot be meaningfully interpreted without the authorized decryption flow.
+
+ Recommended validation checks:
+
+ - Verify that opening `README.mksh` in a text editor shows unreadable/random-looking content.
+ - Use the web application to perform a full round-trip:
+   - Upload a plaintext file and confirm the cloud receives only the encrypted version.
+   - Download the encrypted file and decrypt locally only after successful RFID authentication.
+ - Perform negative (security) tests:
+   - Attempt decrypt/download operations **without RFID authentication** and confirm they are blocked.
+   - Let the session expire and confirm the system requires re-authentication.
+   - Trigger a power reset/tamper condition (if implemented) and confirm access is revoked until re-authenticated.
+
+---
+
 ## 10. Conclusion
 
-This project successfully demonstrates a **secure, hardware-authenticated cloud storage system** using IoT and embedded Linux platforms. By combining physical authentication, session control, and local encryption, the system ensures high data confidentiality and integrity. The architecture is robust, cost-effective, and aligned with modern cybersecurity principles, making it an ideal project for academic evaluation and future enhancement.
-
+ This project successfully demonstrates a **secure, hardware-authenticated cloud storage system** using IoT and embedded Linux platforms. By combining physical authentication, session control, and local encryption, the system ensures high data confidentiality and integrity. The architecture is robust, cost-effective, and aligned with modern cybersecurity principles, making it an ideal project for academic evaluation and future enhancement.

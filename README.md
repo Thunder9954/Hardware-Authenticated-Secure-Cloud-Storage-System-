@@ -1,10 +1,11 @@
- # Hardware-Authenticated Secure Cloud Storage 
+ # Hardware-Authenticated Secure Cloud Storage (IoT + Embedded Linux)
 
  ## Contents
 
  - [Project Description](#1-project-description)
  - [System Objectives](#2-system-objectives)
  - [Technology Stack](#technology-stack)
+ - [MARKUSH ENCRYPTER (MKSH)](#markush-encrypter-mksh)
  - [Hardware and Module Overview](#3-hardware-and-module-overview)
  - [Overall System Architecture](#4-overall-system-architecture)
  - [User Workflow (User Point of View)](#5-user-workflow-user-point-of-view)
@@ -46,6 +47,79 @@
  - **Networking:** LAN (Wi-Fi)
  - **Security:** Local encryption, hardware authentication
  - **Cloud Access:** API-based encrypted upload/download
+
+ ## MARKUSH ENCRYPTER (MKSH)
+
+ Created by Purn Vadodariya
+
+ A secure, stateless, fully offline file encryption tool with a modern Tkinter GUI and a high-performance C++ crypto backend.
+
+ ### Core Philosophy
+ - **Stateless**: Stores nothing (no database, no server).
+ - **Offline**: Runs locally on your machine.
+ - **Cross-Device**: Decrypt on any device that has the tool and your key.
+
+ ### Features & Functions
+
+ #### Identity / Key
+ - **Generate ID**: Generate a 256-bit Markush-Bit (64 hex chars).
+ - **Passphrase or Random**: Optionally derive the Markush-Bit from a passphrase; otherwise generate from secure randomness.
+ - **Copy & Save**:
+   - Copy Markush-Bit to clipboard.
+   - Save a printable “identity card” (HTML → system print dialog).
+
+ #### Encrypt / Decrypt (Batch)
+ - **Batch Encrypt / Batch Decrypt** with a queue.
+ - **Add Files**: Add multiple files to the queue.
+ - **Add Folder**: Folder inputs are archived into a `.zip` before encryption.
+ - **Output Control**: Save to the same folder as input, or choose a custom output directory.
+ - **Progress Logging**: Terminal-style progress log during processing.
+
+ #### Secure Wiping (Optional)
+ - **Securely shred original** (optional on encrypt): 3-pass overwrite (zeros, ones, random) then delete.
+ - Folder shredding is intentionally limited for safety.
+
+ ### Usage (Quick Start)
+
+ 1. Launch the application.
+
+ 2. **Generate your Markush-Bit**:
+    - Click `GENERATE ID`.
+    - Enter an optional passphrase or leave blank.
+    - Save the generated 64-hex key.
+
+ 3. **Encrypt (batch)**:
+    - Go to `ENCRYPT / DECRYPT`.
+    - Enter your key.
+      - If you paste a 64-hex Markush-Bit, it will be used directly.
+      - Otherwise, the app hashes your input into a 64-hex key.
+    - Add files/folders to the queue.
+    - Click `BATCH ENCRYPT`.
+    - Output files are written with the `.mksh` extension.
+
+ 4. **Decrypt (batch)**:
+    - Add `.mksh` files to the queue.
+    - Enter the same key used for encryption.
+    - Click `BATCH DECRYPT`.
+    - If the decrypted output is a `.zip`, the app auto-extracts it.
+
+ ### Security & File Format Details
+
+ #### Cryptography
+ - **Authenticated encryption**: AES-256-GCM per chunk.
+ - **KDF**: Argon2id via OpenSSL (used for deriving the master key from your Markush-Bit + per-file salt).
+ - **Tamper checks**:
+   - AES-GCM authentication tags.
+   - Deterministic IV verification during decryption (detects tampering).
+
+ #### File format (`.mksh`)
+ - Magic header: `MKSH`
+ - Version: `2`
+ - Per-file random salt: 16 bytes
+ - Chunking: 1MB chunks
+ - Structure masking:
+   - Chunks are encrypted then **written in a randomized order**.
+   - An encrypted “map” stores `(chunk_id, chunk_size)` pairs to reconstruct the original stream.
 
 ## 3. Hardware and Module Overview
 

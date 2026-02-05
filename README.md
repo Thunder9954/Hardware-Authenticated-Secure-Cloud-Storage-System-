@@ -1,4 +1,4 @@
- # Hardware-Authenticated Secure Cloud Storage (IoT + Embedded Linux)
+ # Hardware-Authenticated Secure Cloud Storage 
 
  ## Contents
 

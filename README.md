@@ -1,25 +1,50 @@
-# Hardware-Authenticated Secure Cloud Storage System using IoT and Embedded Linux
+ # Hardware-Authenticated Secure Cloud Storage (IoT + Embedded Linux)
 
-## 1. Project Description
+ ## Contents
 
-This project presents a **standalone, hardware-authenticated secure cloud storage system** built using low-cost IoT and embedded devices. The system ensures that **data is encrypted locally before reaching the cloud**, and that **no encryption or decryption operation can occur without physical authentication**.
+ - [Project Description](#1-project-description)
+ - [System Objectives](#2-system-objectives)
+ - [Technology Stack](#technology-stack)
+ - [Hardware and Module Overview](#3-hardware-and-module-overview)
+ - [Overall System Architecture](#4-overall-system-architecture)
+ - [User Workflow (User Point of View)](#5-user-workflow-user-point-of-view)
+ - [Backend Workflow (System Internal Operation)](#6-backend-workflow-system-internal-operation)
+ - [Flowchart Description (Textual)](#7-flowchart-description-textual)
+ - [Security Features](#8-security-features)
+ - [Advantages of the System](#9-advantages-of-the-system)
+ - [Conclusion](#10-conclusion)
 
-Unlike traditional cloud storage solutions that rely only on software-based passwords, this system integrates **RFID-based hardware authentication**, **session control using ESP32 modules**, and **local encryption on an embedded Linux platform**. The complete system operates **without a laptop**, runs automatically on power-up, and is accessible only through a **LAN-based web application**.
+ ## 1. Project Description
 
-The design demonstrates strong principles of **cybersecurity, defense-in-depth, and secure system architecture**, making it suitable for academic evaluation and real-world secure storage use cases.
+ This project implements a **standalone, hardware-authenticated secure cloud storage system** using low-cost IoT and embedded platforms. Files are **encrypted locally before any cloud upload**, and **encryption/decryption operations are gated by physical authentication**.
 
----
+ Unlike traditional cloud storage solutions that rely only on software-based passwords, this system integrates **RFID-based hardware authentication**, **session control using ESP32 modules**, and **local cryptographic processing on an embedded Linux device**. The complete system operates **without a laptop**, runs automatically on power-up, and is accessible only through a **LAN-based web application**.
 
-## 2. System Objectives
+ The design demonstrates strong principles of **cybersecurity, defense-in-depth, and secure system architecture**, making it suitable for academic evaluation and real-world secure storage use cases.
 
-- To implement hardware-level authentication for secure data access
-- To perform encryption and decryption locally before cloud interaction
-- To ensure the cloud never receives plaintext data
-- To eliminate dependency on laptops or external computers
-- To demonstrate secure file destruction beyond software recovery
-- To design a low-cost yet professional embedded security system
+ ---
 
----
+ ## 2. System Objectives
+
+ - Ensure **hardware-backed authentication** for secure data access
+ - Perform **encryption and decryption locally** before cloud interaction
+ - Guarantee the cloud stores **ciphertext only** (no plaintext exposure)
+ - Operate as a **standalone embedded system** (no external computer dependency)
+ - Provide **secure file destruction** beyond standard software deletion
+ - Demonstrate a **defense-in-depth** embedded security architecture
+
+ ---
+
+ ## Technology Stack
+
+ - **Microcontrollers:** ESP32 (×3), Arduino Uno (R3)
+ - **Embedded Platform:** Raspberry Pi Zero 2 W (Linux)
+ - **Authentication:** RFID (RC522)
+ - **Display:** OLED (I2C)
+ - **Communication Protocols:** SPI, I2C, UART, USB Serial
+ - **Networking:** LAN (Wi-Fi)
+ - **Security:** Local encryption, hardware authentication
+ - **Cloud Access:** API-based encrypted upload/download
 
 ## 3. Hardware and Module Overview
 
@@ -96,6 +121,10 @@ The system is divided into **three security layers**:
 3. **Processing & Cloud Layer** – Raspberry Pi Zero 2 W
 
 This layered approach ensures that failure or compromise of one layer does not expose the entire system.
+
+ ### Architecture Diagram
+
+ ![System Architecture Diagram](./diagram.png)
 
 ---
 
@@ -192,3 +221,4 @@ This layered approach ensures that failure or compromise of one layer does not e
 ## 10. Conclusion
 
 This project successfully demonstrates a **secure, hardware-authenticated cloud storage system** using IoT and embedded Linux platforms. By combining physical authentication, session control, and local encryption, the system ensures high data confidentiality and integrity. The architecture is robust, cost-effective, and aligned with modern cybersecurity principles, making it an ideal project for academic evaluation and future enhancement.
+
